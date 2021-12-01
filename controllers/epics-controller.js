@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const epic = await epicsService.getEpicById(req.params.id);
+  const epic = await epicsService.getEpicById(Number(req.params.id));
   if (epic) {
     res.send(epic);
   } else {

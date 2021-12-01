@@ -1,6 +1,5 @@
 const express = require("express");
 
-const epicsService = require("./services/epics-service");
 const epicsRouter = require("./controllers/epics-controller");
 
 const app = express();
