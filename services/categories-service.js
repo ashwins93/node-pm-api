@@ -1,8 +1,50 @@
 const knex = require("../db");
 const epicsService = require("./epics-service");
 
-function getAllCategories() {
-  return knex("categories").select("*");
+async function getAllCategories() {
+  /*
+    Option 1
+
+    const categories = await knex("categories").select();
+
+    for (let category of categories) {
+      category.epic = await epicsService.getEpicById(category.epic_id);
+    }
+
+    return categories;
+  */
+
+  /* Option 2 */
+  const categories = await knex("categories")
+    .select({
+      id: "categories.id",
+      name: "categories.name",
+      created_at: "categories.created_at",
+      updated_at: "categories.updated_at",
+      epic_id: "epics.id",
+      epic_name: "epics.name",
+      epic_created_at: "epics.created_at",
+      epic_updated_at: "epics.updated_at",
+    })
+    .join("epics", "categories.epic_id", "=", "epics.id");
+
+  const results = [];
+
+  for (let category of categories) {
+    results.push({
+      id: category.id,
+      name: category.name,
+      created_at: category.created_at,
+      updated_at: category.updated_at,
+      epic: {
+        id: category.epic_id,
+        name: category.epic_name,
+        created_at: category.epic_created_at,
+        updated_at: category.epic_updated_at,
+      },
+    });
+  }
+  return results;
 }
 
 function getCategoryById(id) {

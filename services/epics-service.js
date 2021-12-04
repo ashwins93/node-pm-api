@@ -1,7 +1,68 @@
 const knex = require("../db");
 
-function getAllEpics() {
-  return knex.select("*").from("epics");
+async function getAllEpics() {
+  const epics = await knex
+    .select({
+      id: "epics.id",
+      name: "epics.name",
+      created_at: "epics.created_at",
+      updated_at: "epics.updated_at",
+      category_id: "categories.id",
+      category_name: "categories.name",
+      category_created_at: "categories.created_at",
+      category_updated_at: "categories.updated_at",
+    })
+    .from("epics")
+    .leftJoin("categories", "categories.epic_id", "=", "epics.id");
+
+  const results = [];
+
+  for (let epic of epics) {
+    const existing = results.find((resultEpic) => {
+      return resultEpic.id === epic.id;
+    });
+
+    if (existing) {
+      existing.categories.push({
+        id: epic.category_id,
+        name: epic.category_name,
+        created_at: epic.category_created_at,
+        updated_at: epic.category_updated_at,
+      });
+    } else {
+      const temp = {
+        id: epic.id,
+        name: epic.name,
+        created_at: epic.created_at,
+        updated_at: epic.updated_at,
+        categories: [],
+      };
+
+      if (epic.category_id) {
+        temp.categories.push({
+          id: epic.category_id,
+          name: epic.category_name,
+          created_at: epic.category_created_at,
+          updated_at: epic.category_updated_at,
+        });
+      }
+      results.push(temp);
+    }
+  }
+
+  return results;
+
+  /*
+  const epics = await knex('epics').select();
+
+  for (let epic of epics) {
+    epics.categories = await knex('categories')
+    .select()
+    .where('epic_id', epic.id);
+  }
+
+  return epics;
+  */
 }
 
 async function createEpic(epicName) {
