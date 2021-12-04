@@ -1,0 +1,56 @@
+GET http://localhost:3000/api/v1/epics
+
+###
+
+POST http://localhost:3000/api/v1/epics
+Content-Type: application/json
+
+{
+  "name": "Epic 1"
+}
+
+###
+
+PUT http://localhost:3000/api/v1/epics/1
+Content-Type: application/json
+
+{
+  "name": "Epic changed"
+}
+
+###
+
+DELETE http://localhost:3000/api/v1/epics/4
+
+###
+
+GET http://localhost:3000/api/v1/categories
+
+###
+
+GET http://localhost:3000/api/v1/categories/1
+
+###
+
+POST http://localhost:3000/api/v1/categories
+Content-Type: application/json
+
+{
+  "name": "Category 2",
+  "epic_id": 1
+}
+
+###
+
+PUT http://localhost:3000/api/v1/categories/1
+Content-Type: application/json
+
+{
+  "name": "Category changed"
+}
+
+###
+
+DELETE http://localhost:3000/api/v1/categories/2
+
+###

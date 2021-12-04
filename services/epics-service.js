@@ -13,7 +13,7 @@ async function createEpic(epicName) {
   return newEpic;
 }
 
-async function getEpicById(epicId) {
+function getEpicById(epicId) {
   return knex.select("*").from("epics").where("id", epicId).first();
 }
 
