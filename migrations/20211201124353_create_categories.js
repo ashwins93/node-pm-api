@@ -4,7 +4,12 @@ exports.up = function (knex) {
     table.string("name").notNullable();
     table.timestamps();
 
-    table.integer("epic_id").unsigned().notNullable().references("epics.id");
+    table
+      .integer("epic_id")
+      .unsigned()
+      .notNullable()
+      .references("epics.id")
+      .onDelete("CASCADE");
   });
 };
 

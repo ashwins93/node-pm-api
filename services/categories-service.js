@@ -42,6 +42,7 @@ async function getAllCategories() {
         created_at: category.epic_created_at,
         updated_at: category.epic_updated_at,
       },
+      items: await knex("items").select().where("category_id", category.id),
     });
   }
   return results;
@@ -90,6 +91,12 @@ async function deleteCategory(id) {
   if (!category) {
     return null;
   }
+
+  const itemIds = (
+    await knex("items").select("id").where("category_id", id)
+  ).map((item) => item.id);
+
+  await knex("items").del().whereIn("id", itemIds);
 
   await knex("categories").del().where("id", id);
 

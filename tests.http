@@ -36,8 +36,8 @@ POST http://localhost:3000/api/v1/categories
 Content-Type: application/json
 
 {
-  "name": "Category 3",
-  "epic_id": 2
+  "name": "Category 2",
+  "epic_id": 1
 }
 
 ###
@@ -51,6 +51,41 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/v1/categories/2
+DELETE http://localhost:3000/api/v1/categories/4
+
+###
+
+POST http://localhost:3000/api/v1/items
+Content-Type: application/json
+
+{
+  "name": "Item 1",
+  "category_id": 5
+}
+
+###
+
+GET http://localhost:3000/api/v1/items
+
+###
+
+GET http://localhost:3000/api/v1/items?epic_id=2
+
+###
+
+GET http://localhost:3000/api/v1/items/1
+
+###
+
+PUT http://localhost:3000/api/v1/items/1
+Content-Type: application/json
+
+{
+  "category_id": 4
+}
+
+###
+
+DELETE http://localhost:3000/api/v1/items/2
 
 ###

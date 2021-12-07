@@ -7,7 +7,8 @@ exports.up = function (knex) {
     t.integer("category_id")
       .unsigned()
       .notNullable()
-      .references("categories.id");
+      .references("categories.id")
+      .onDelete("CASCADE");
   });
 };
 
