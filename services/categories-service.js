@@ -1,20 +1,21 @@
 const knex = require("../db");
 const epicsService = require("./epics-service");
 
-async function getAllCategories() {
-  /*
-    Option 1
+async function getAllCategories(user) {
+  /*Option 1*/
 
-    const categories = await knex("categories").select();
+  const categories = await knex("categories")
+    .select("categories.*")
+    .leftJoin("epics", "epics.id", "=", "categories.epic_id")
+    .where("epics.owner_id", user.id);
 
-    for (let category of categories) {
-      category.epic = await epicsService.getEpicById(category.epic_id);
-    }
+  for (let category of categories) {
+    category.epic = await epicsService.getEpicById(category.epic_id);
+  }
 
-    return categories;
-  */
+  return categories;
 
-  /* Option 2 */
+  /* Option 2 
   const categories = await knex("categories")
     .select({
       id: "categories.id",
@@ -26,7 +27,8 @@ async function getAllCategories() {
       epic_created_at: "epics.created_at",
       epic_updated_at: "epics.updated_at",
     })
-    .join("epics", "categories.epic_id", "=", "epics.id");
+    .join("epics", "categories.epic_id", "=", "epics.id")
+    .where("epics.owner_id", user.id);
 
   const results = [];
 
@@ -46,6 +48,7 @@ async function getAllCategories() {
     });
   }
   return results;
+  */
 }
 
 function getCategoryById(id) {

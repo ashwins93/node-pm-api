@@ -1,6 +1,6 @@
 const knex = require("../db");
 
-async function getAllEpics() {
+async function getAllEpics(user) {
   const epics = await knex
     .select({
       id: "epics.id",
@@ -13,7 +13,8 @@ async function getAllEpics() {
       category_updated_at: "categories.updated_at",
     })
     .from("epics")
-    .leftJoin("categories", "categories.epic_id", "=", "epics.id");
+    .leftJoin("categories", "categories.epic_id", "=", "epics.id")
+    .where("owner_id", user.id);
 
   const results = [];
 
@@ -65,8 +66,8 @@ async function getAllEpics() {
   */
 }
 
-async function createEpic(epicName) {
-  const newEpic = { name: epicName, created_at: new Date() };
+async function createEpic(epicName, user) {
+  const newEpic = { name: epicName, created_at: new Date(), owner_id: user.id };
   const insertedIds = await knex.insert(newEpic).into("epics");
   // return knex('epics').insert({name: epicName});
   newEpic.id = insertedIds[0];

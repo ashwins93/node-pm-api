@@ -1,12 +1,14 @@
 GET http://localhost:3000/api/v1/epics
+Authorization: 2
 
 ###
 
 POST http://localhost:3000/api/v1/epics
 Content-Type: application/json
+Authorization: 2
 
 {
-  "name": "Epic 1"
+  "name": "Epic 2"
 }
 
 ###
@@ -25,6 +27,7 @@ DELETE http://localhost:3000/api/v1/epics/4
 ###
 
 GET http://localhost:3000/api/v1/categories
+Authorization: 2
 
 ###
 
@@ -34,10 +37,11 @@ GET http://localhost:3000/api/v1/categories/1
 
 POST http://localhost:3000/api/v1/categories
 Content-Type: application/json
+Authorization: 2
 
 {
-  "name": "Category 2",
-  "epic_id": 1
+  "name": "Category 1",
+  "epic_id": 2
 }
 
 ###
@@ -87,5 +91,14 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3000/api/v1/items/2
+
+###
+
+POST http://localhost:3000/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "username": "ashwin2"
+}
 
 ###

@@ -2,14 +2,19 @@ const express = require("express");
 
 const router = express.Router();
 const epicsService = require("../services/epics-service");
+const {
+  authorizeRequest,
+  authenticateUser,
+  isLoggedIn,
+} = require("../middleware/auth");
 
-router.get("/", async (req, res) => {
-  res.send(await epicsService.getAllEpics());
+router.get("/", authenticateUser, isLoggedIn, async (req, res) => {
+  res.send(await epicsService.getAllEpics(req.user));
 });
 
-router.post("/", async (req, res) => {
+router.post("/", authenticateUser, isLoggedIn, async (req, res) => {
   try {
-    const newEpic = await epicsService.createEpic(req.body.name);
+    const newEpic = await epicsService.createEpic(req.body.name, req.user);
     res.status(201).send(newEpic);
   } catch (err) {
     if (err.errno === 19) {
@@ -36,7 +41,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", authenticateUser, isLoggedIn, async (req, res) => {
   const updatedEpic = await epicsService.updateEpic(
     Number(req.params.id),
     req.body.name

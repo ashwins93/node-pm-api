@@ -2,6 +2,11 @@ const express = require("express");
 
 const router = express.Router();
 const categoriesService = require("../services/categories-service");
+const {
+  authenticateUser,
+  isLoggedIn,
+  isOwnerOfEpic,
+} = require("../middleware/auth");
 
 function catchError(fn) {
   return async function (req, res) {
@@ -17,14 +22,17 @@ function catchError(fn) {
 }
 
 const getAllCategories = catchError(async function baseGetAll(req, res) {
-  res.send(await categoriesService.getAllCategories());
+  res.send(await categoriesService.getAllCategories(req.user));
 });
 
-router.get("/", getAllCategories);
+router.get("/", authenticateUser, isLoggedIn, getAllCategories);
 
 router.post(
   "/",
   validateCategoryBody,
+  authenticateUser,
+  isLoggedIn,
+  isOwnerOfEpic,
   catchError(async (req, res) => {
     const newCategory = await categoriesService.createCategory(req.body);
 
