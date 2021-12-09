@@ -1,35 +1,54 @@
 const db = require("../db");
 
-function authorizeRequest(req, res, next) {
-  if (req.headers.authorization) {
-    const userName = req.headers.authorization;
-    if (userName === "admin") {
-      next();
-      return;
-    }
+// function authorizeRequest(req, res, next) {
+//   if (req.headers.authorization) {
+//     const userName = req.headers.authorization;
+//     if (userName === "admin") {
+//       next();
+//       return;
+//     }
+//   }
+
+//   res.status(401).send({ message: "Unauthorized" });
+// }
+
+async function basicAuthenticateUser(req, res, next) {
+  const userInfo = req.headers.authorization;
+
+  if (!userInfo) {
+    return next();
   }
 
-  res.status(401).send({ message: "Unauthorized" });
-}
+  const credentials = userInfo.split(" ")[1];
 
-async function authenticateUser(req, res, next) {
-  const userId = Number(req.headers.authorization);
+  if (credentials) {
+    const decoded = Buffer.from(credentials, "base64").toString();
+    const [username, password] = decoded.split(":");
 
-  if (userId) {
-    const user = await db("users").select().where("id", userId).first();
+    if (username) {
+      const user = await db("users")
+        .select()
+        .where("username", username)
+        .first();
 
-    req.user = user;
+      if (user && user.password === password) {
+        req.user = user;
+      }
+    }
   }
 
   next();
 }
 
 async function isLoggedIn(req, res, next) {
+  req.user = req.user || req.session.user;
+
   if (req.user) {
     next();
     return;
   }
 
+  // res.setHeader("WWW-Authenticate", "Basic");
   res.status(401).send({ message: "Unauthorized" });
 }
 
@@ -53,8 +72,7 @@ async function isOwnerOfEpic(req, res, next) {
 }
 
 module.exports = {
-  authorizeRequest,
-  authenticateUser,
+  authenticateUser: basicAuthenticateUser,
   isLoggedIn,
   isOwnerOfEpic,
 };

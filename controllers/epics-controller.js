@@ -2,11 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 const epicsService = require("../services/epics-service");
-const {
-  authorizeRequest,
-  authenticateUser,
-  isLoggedIn,
-} = require("../middleware/auth");
+const { authenticateUser, isLoggedIn } = require("../middleware/auth");
 
 router.get("/", authenticateUser, isLoggedIn, async (req, res) => {
   res.send(await epicsService.getAllEpics(req.user));

@@ -8,6 +8,19 @@ async function createUser(user) {
   return user;
 }
 
+async function loginUser(username, password) {
+  const user = await knex("users")
+    .select()
+    .where({
+      username,
+      password,
+    })
+    .first();
+
+  return user;
+}
+
 module.exports = {
   createUser,
+  loginUser,
 };

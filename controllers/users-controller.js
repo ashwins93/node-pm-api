@@ -20,4 +20,18 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  const user = await usersService.loginUser(
+    req.body.username,
+    req.body.password
+  );
+
+  if (user) {
+    req.session.user = user;
+    res.send({ message: "Logged in successfully" });
+  } else {
+    res.status(401).send({ message: "Invalid username or password" });
+  }
+});
+
 module.exports = router;

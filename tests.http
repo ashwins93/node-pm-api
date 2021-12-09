@@ -1,14 +1,14 @@
 GET http://localhost:3000/api/v1/epics
-Authorization: 2
+Cookie: connect.sid=s%3Ai7xIoRftwGYbGDdWPtGlW32moywwiuDg.7V3C%2FPMDSsfTJGCKeODiql4TCT0jaVEpWwoc6vZZgPo; Path=/; Expires=Thu, 09 Dec 2021 15:18:16 GMT;
 
 ###
 
 POST http://localhost:3000/api/v1/epics
 Content-Type: application/json
-Authorization: 2
+Authorization: Basic YXNod2luMjpwYXNzd29yZA==
 
 {
-  "name": "Epic 2"
+  "name": "Epic 1"
 }
 
 ###
@@ -98,7 +98,18 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "username": "ashwin2"
+  "username": "ashwin2",
+  "password": "password"
+}
+
+###
+
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+  "username": "ashwin2",
+  "password": "password"
 }
 
 ###
