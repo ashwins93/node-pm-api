@@ -1,4 +1,5 @@
 const db = require("../db");
+const jwt = require("jsonwebtoken");
 
 // function authorizeRequest(req, res, next) {
 //   if (req.headers.authorization) {
@@ -15,7 +16,7 @@ const db = require("../db");
 async function basicAuthenticateUser(req, res, next) {
   const userInfo = req.headers.authorization;
 
-  if (!userInfo) {
+  if (!userInfo || !userInfo.startsWith("Basic ")) {
     return next();
   }
 
@@ -37,6 +38,34 @@ async function basicAuthenticateUser(req, res, next) {
     }
   }
 
+  next();
+}
+
+async function jwtAuthentication(req, res, next) {
+  const authHeader = req.headers.authorization;
+
+  if (authHeader && authHeader.startsWith("Bearer ")) {
+    const token = authHeader.split(" ")[1];
+
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, "56F7CCA4F78172A16E156B28A4E4F");
+        const user = await db("users")
+          .select()
+          .where({ id: decoded.userId })
+          .first();
+
+        if (user) {
+          req.user = user;
+          next();
+          return;
+        }
+      } catch (err) {
+        res.status(401).send({ message: "Invalid token provided" });
+        return;
+      }
+    }
+  }
   next();
 }
 
@@ -75,4 +104,5 @@ module.exports = {
   authenticateUser: basicAuthenticateUser,
   isLoggedIn,
   isOwnerOfEpic,
+  jwtAuthentication,
 };

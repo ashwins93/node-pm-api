@@ -1,4 +1,5 @@
 const knex = require("../db");
+const bcrypt = require("bcrypt");
 
 async function createUser(user) {
   const [id] = await knex("users").insert(user);
@@ -13,11 +14,14 @@ async function loginUser(username, password) {
     .select()
     .where({
       username,
-      password,
     })
     .first();
 
-  return user;
+  if (user && bcrypt.compareSync(password, user.password)) {
+    return user;
+  }
+
+  return null;
 }
 
 module.exports = {
