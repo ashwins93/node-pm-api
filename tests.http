@@ -1,11 +1,11 @@
 GET http://localhost:3000/api/v1/epics
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MDA5NDUxNSwiZXhwIjoxNjQwMTgwOTE1fQ.sKuKUXqPziROxn56CAgHyJuQhrFReMHreb8wv13xXY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MDM1MTMyMywiZXhwIjoxNjQwNDM3NzIzfQ.9f5cX_lpsv9uY24tzXq0e79IFP9xBGWlEQULe7IRNjo
 
 ###
 
 POST http://localhost:3000/api/v1/epics
 Content-Type: application/json
-Authorization: Basic YXNod2luMjpwYXNzd29yZA==
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MDM1MTMyMywiZXhwIjoxNjQwNDM3NzIzfQ.9f5cX_lpsv9uY24tzXq0e79IFP9xBGWlEQULe7IRNjo
 
 {
   "name": "Epic 1"

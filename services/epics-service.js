@@ -5,6 +5,7 @@ async function getAllEpics(user) {
     .select({
       id: "epics.id",
       name: "epics.name",
+      file_name: "epics.file_name",
       created_at: "epics.created_at",
       updated_at: "epics.updated_at",
       category_id: "categories.id",
@@ -34,6 +35,7 @@ async function getAllEpics(user) {
       const temp = {
         id: epic.id,
         name: epic.name,
+        file_name: epic.file_name,
         created_at: epic.created_at,
         updated_at: epic.updated_at,
         categories: [],
@@ -79,7 +81,7 @@ function getEpicById(epicId) {
   return knex.select("*").from("epics").where("id", epicId).first();
 }
 
-async function updateEpic(id, epicName) {
+async function updateEpic(id, epicInput) {
   const epic = await getEpicById(id);
 
   if (!epic) {
@@ -87,7 +89,7 @@ async function updateEpic(id, epicName) {
   }
 
   await knex("epics")
-    .update({ name: epicName, updated_at: new Date() })
+    .update({ ...epicInput, updated_at: new Date() })
     .where("id", id);
 
   return getEpicById(id);
