@@ -2,11 +2,14 @@ const knex = require("../db");
 const bcrypt = require("bcrypt");
 
 async function createUser(user) {
-  const [id] = await knex("users").insert(user);
+  const [newUser] = await knex("users").insert(user, [
+    "id",
+    "username",
+    "created_at",
+    "updated_at",
+  ]);
 
-  user.id = id;
-
-  return user;
+  return newUser;
 }
 
 async function loginUser(username, password) {

@@ -67,11 +67,9 @@ async function createCategory(category) {
   category.created_at = new Date();
   category.updated_at = new Date();
 
-  const [id] = await knex("categories").insert(category);
+  const [newCategory] = await knex("categories").insert(category, "*");
 
-  category.id = id;
-
-  return category;
+  return newCategory;
 }
 
 async function updateCategory(id, categoryInput) {

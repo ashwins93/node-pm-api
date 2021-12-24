@@ -8,7 +8,7 @@ router.post("/register", async (req, res) => {
   try {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
     const user = await usersService.createUser(req.body);
-    delete user.password;
+
     res.send(user);
   } catch (err) {
     if (err.errno === 19) {

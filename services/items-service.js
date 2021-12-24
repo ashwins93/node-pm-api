@@ -31,12 +31,9 @@ async function createItem(item) {
   item.created_at = new Date();
   item.updated_at = new Date();
 
-  const [id] = await knex("items").insert(item);
+  const [insertedItem] = await knex("items").insert(item, "*");
 
-  item.id = id;
-  item.category = category;
-
-  return item;
+  return insertedItem;
 }
 
 async function getItemById(id) {

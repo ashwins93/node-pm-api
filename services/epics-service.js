@@ -70,11 +70,9 @@ async function getAllEpics(user) {
 
 async function createEpic(epicName, user) {
   const newEpic = { name: epicName, created_at: new Date(), owner_id: user.id };
-  const insertedIds = await knex.insert(newEpic).into("epics");
-  // return knex('epics').insert({name: epicName});
-  newEpic.id = insertedIds[0];
+  const insertedEpic = await knex.insert(newEpic, "*").into("epics");
 
-  return newEpic;
+  return insertedEpic[0];
 }
 
 function getEpicById(epicId) {

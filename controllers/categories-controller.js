@@ -6,6 +6,7 @@ const {
   authenticateUser,
   isLoggedIn,
   isOwnerOfEpic,
+  jwtAuthentication,
 } = require("../middleware/auth");
 
 function catchError(fn) {
@@ -31,6 +32,7 @@ router.post(
   "/",
   validateCategoryBody,
   authenticateUser,
+  jwtAuthentication,
   isLoggedIn,
   isOwnerOfEpic,
   catchError(async (req, res) => {

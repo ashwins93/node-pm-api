@@ -1,15 +1,15 @@
 GET http://localhost:3000/api/v1/epics
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MDM1MTMyMywiZXhwIjoxNjQwNDM3NzIzfQ.9f5cX_lpsv9uY24tzXq0e79IFP9xBGWlEQULe7IRNjo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTY0MDM1NTM1MSwiZXhwIjoxNjQwNDQxNzUxfQ.kkDQ0ecdQ1oXuAXOModR5_CNgbmna-X9jo6GGIPV5Q0
 
 ###
 
 POST http://localhost:3000/api/v1/epics
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY0MDM1MTMyMywiZXhwIjoxNjQwNDM3NzIzfQ.9f5cX_lpsv9uY24tzXq0e79IFP9xBGWlEQULe7IRNjo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTY0MDM1NTM1MSwiZXhwIjoxNjQwNDQxNzUxfQ.kkDQ0ecdQ1oXuAXOModR5_CNgbmna-X9jo6GGIPV5Q0
 
 {
-  "name": "Epic 1"
-}
+  "name": "Epic 3"
+} 
 
 ###
 
@@ -22,7 +22,8 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/v1/epics/4
+DELETE http://localhost:3000/api/v1/epics/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTY0MDM1NTM1MSwiZXhwIjoxNjQwNDQxNzUxfQ.kkDQ0ecdQ1oXuAXOModR5_CNgbmna-X9jo6GGIPV5Q0
 
 ###
 
@@ -37,11 +38,11 @@ GET http://localhost:3000/api/v1/categories/1
 
 POST http://localhost:3000/api/v1/categories
 Content-Type: application/json
-Authorization: 2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTY0MDM1NTM1MSwiZXhwIjoxNjQwNDQxNzUxfQ.kkDQ0ecdQ1oXuAXOModR5_CNgbmna-X9jo6GGIPV5Q0 
 
 {
   "name": "Category 1",
-  "epic_id": 2
+  "epic_id": 1
 }
 
 ###
@@ -98,7 +99,7 @@ POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "username": "ashwin",
+  "username": "ashwin2",
   "password": "password"
 }
 
